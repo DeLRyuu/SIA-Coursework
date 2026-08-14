@@ -1,0 +1,51 @@
+.todo-container {
+  max-width: 500px;
+  margin: 40px auto;
+  text-align: center;
+}
+
+.title {
+  font-family: serif;
+}
+
+.heading-input, .list-input {
+  padding: 10px;
+  width: 70%;
+  margin-right: 10px;
+}
+
+.add-list-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+}
+
+.todo_main {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.todo-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  width: 250px;
+}
+
+.heading_todo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.delete-button-heading {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+}
