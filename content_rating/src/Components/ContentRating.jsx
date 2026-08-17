@@ -11,13 +11,25 @@ class ContentRating extends Component {
     };
   }
 
+  handleLike = () => {
+    this.setState((prevState) => ({
+      likes: prevState.likes + 1,
+    }));
+  };
+
+  handleDislike = () => {
+    this.setState((prevState) => ({
+      dislikes: prevState.dislikes + 1,
+    }));
+  };
+
   render() {
     return (
       <>
         <div className="content-rating">
           <p>
-            sss React, a JavaScript library developed by Facebook, has
-            revolutionized the landscape of front-end web development
+              sss React, a JavaScript library developed by Facebook, has
+              revolutionized the landscape of front-end web development
               with its component-based architecture. At its core, React
               enables developers to break down complex user interfaces
               into reusable, encapsulated components, each managing its
@@ -39,11 +51,17 @@ class ContentRating extends Component {
           </p>
 
           <div className="rating-buttons">
-            <button className="like-button">
+            <button
+              className="like-button"
+              onClick={this.handleLike}
+            >
               Like ({this.state.likes})
             </button>
 
-            <button className="dislike-button">
+            <button
+              className="dislike-button"
+              onClick={this.handleDislike}
+            >
               Dislike ({this.state.dislikes})
             </button>
           </div>
