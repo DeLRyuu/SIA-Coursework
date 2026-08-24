@@ -122,3 +122,37 @@
   color: #5a3a45;
   padding: 6px 0;
 }
+
+.testimonials {
+  text-align: center;
+  padding: 40px 20px;
+  background-image: repeating-linear-gradient(
+    135deg,
+    #fbe4ec 0px, #fbe4ec 20px,
+    #ffffff 20px, #ffffff 40px
+  );
+}
+
+.testimonials h2 {
+  font-size: 30px;
+  color: #7a1f3d;
+  margin-bottom: 24px;
+}
+
+.testimonial {
+  max-width: 560px;
+  margin: 0 auto 20px;
+}
+
+.testimonial p {
+  font-style: italic;
+  font-size: 16px;
+  margin: 0;
+  color: #4a3a40;
+}
+
+.testimonial .author {
+  font-style: normal;
+  font-weight: bold;
+  margin-top: 6px;
+}
