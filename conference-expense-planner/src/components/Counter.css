@@ -1,0 +1,44 @@
+.counter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(11, 15, 23, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 0.35rem;
+  width: 100%;
+}
+
+.counter button {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255, 255, 255, 0.05);
+  color: #f8fafc;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.counter button:hover:not(:disabled) {
+  background: #facc15;
+  color: #0b0f17;
+}
+
+.counter button:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+.counter span {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #f8fafc;
+  min-width: 30px;
+  text-align: center;
+}

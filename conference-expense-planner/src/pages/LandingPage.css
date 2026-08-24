@@ -1,0 +1,298 @@
+/* Page Setup */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-color: #0b0f17;
+}
+
+/* --- Preloader Screen --- */
+.preloader-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: #0b0f17;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preloader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.preloader-text {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  margin-top: 0.5rem;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+/* --- Main Landing Page Transitions --- */
+.landing {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: 100vw;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 6vw;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #ffffff;
+  opacity: 0;
+  transform: scale(0.98);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Smooth Fade-in & Zoom Effect when ready */
+.landing--loaded {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.landing__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(11, 15, 23, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1;
+}
+
+.landing__content {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 4vw;
+  width: 100%;
+  max-width: 1200px;
+  align-items: center;
+}
+
+.landing__intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.landing__badge {
+  background: rgba(250, 204, 21, 0.12);
+  border: 1px solid rgba(250, 204, 21, 0.3);
+  color: #facc15;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  margin-bottom: 1.25rem;
+  text-transform: uppercase;
+}
+
+.landing__title.display {
+  font-size: clamp(2.5rem, 4.5vw, 4.2rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: #ffffff;
+  margin: 0 0 1rem 0;
+}
+
+.landing__tagline {
+  font-size: 1.2rem;
+  color: #cbd5e1;
+  margin-bottom: 1.75rem;
+}
+
+.landing__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background-color: #eab308;
+  color: #0f172a;
+  font-weight: 700;
+  padding: 0.9rem 2.2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 1rem;
+  box-shadow: 0 0 20px rgba(234, 179, 8, 0.35);
+  transition: all 0.3s ease;
+}
+
+.landing__cta:hover {
+  background-color: #facc15;
+  transform: translateY(-2px);
+}
+
+.landing__features {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.landing__about {
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 2.2rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.landing__about-heading {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #facc15;
+  margin: 0 0 1.25rem 0;
+}
+
+.landing__text-wrapper {
+  min-height: 240px;
+}
+
+.landing__typewriter-text {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: #cbd5e1;
+  text-align: justify;
+}
+
+.typewriter-cursor {
+  display: inline-block;
+  color: #facc15;
+  font-weight: 700;
+  margin-left: 3px;
+  animation: blink 0.8s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+@media (max-width: 900px) {
+  .landing__content {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+
+/* --- Preloader Screen Setup --- */
+.preloader-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: #0b0f17;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+/* Custom Orbital Loader Container */
+.custom-loader {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Outer Spinning Glow Ring */
+.loader-ring:nth-child(1) {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-top-color: #facc15;
+  border-right-color: rgba(250, 204, 21, 0.2);
+  animation: spinOuter 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+  box-shadow: 0 0 15px rgba(250, 204, 21, 0.2);
+}
+
+/* Inner Reverse Spinning Ring */
+.loader-ring:nth-child(2) {
+  position: absolute;
+  inset: 12px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  border-bottom-color: #eab308;
+  border-left-color: rgba(234, 179, 8, 0.3);
+  animation: spinInner 0.8s linear infinite reverse;
+}
+
+/* Center Core with Pulsing Icon */
+.loader-core {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  background: rgba(250, 204, 21, 0.08);
+  border-radius: 50%;
+  backdrop-filter: blur(4px);
+  animation: pulseCore 1.5s ease-in-out infinite alternate;
+}
+
+.loader-icon {
+  font-size: 1.6rem;
+}
+
+.preloader-text {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  margin: 0;
+  animation: pulseText 1.5s ease-in-out infinite alternate;
+}
+
+/* Animation Keyframes */
+@keyframes spinOuter {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes spinInner {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes pulseCore {
+  0% { transform: scale(0.9); box-shadow: 0 0 10px rgba(250, 204, 21, 0.1); }
+  100% { transform: scale(1.1); box-shadow: 0 0 25px rgba(250, 204, 21, 0.3); }
+}
+
+@keyframes pulseText {
+  0% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+/* --- Main Landing View Transitions --- */
+.landing {
+  opacity: 0;
+  transition: opacity 0.6s ease-out;
+}
+
+.landing--loaded {
+  opacity: 1;
+}

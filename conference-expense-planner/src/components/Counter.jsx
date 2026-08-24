@@ -3,7 +3,7 @@ import './Counter.css'
 function Counter({ quantity, onIncrement, onDecrement }) {
   return (
     <div className="counter">
-      <button type="button" onClick={onDecrement}>−</button>
+      <button type="button" onClick={onDecrement} disabled={quantity <= 0}>−</button>
       <span>{quantity}</span>
       <button type="button" onClick={onIncrement}>+</button>
     </div>

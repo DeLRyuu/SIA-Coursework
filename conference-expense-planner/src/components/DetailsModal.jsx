@@ -1,4 +1,3 @@
-// src/components/DetailsModal.jsx
 import { useSelector } from 'react-redux'
 import rooms from '../data/rooms.jsx'
 import addons from '../data/addons.jsx'
@@ -10,8 +9,6 @@ function DetailsModal({ onClose }) {
   const addonQuantities = useSelector((state) => state.addons)
   const mealsState = useSelector((state) => state.meals)
 
-  // Step 1: keep only rooms the user actually picked (quantity > 0)
-  // Step 2: reshape each one into a row for the table
   const roomRows = rooms
     .filter((room) => roomQuantities[room.id] > 0)
     .map((room) => ({
@@ -21,7 +18,6 @@ function DetailsModal({ onClose }) {
       total: room.price * roomQuantities[room.id],
     }))
 
-  // same idea for add-ons
   const addonRows = addons
     .filter((addon) => addonQuantities[addon.id] > 0)
     .map((addon) => ({
@@ -31,8 +27,6 @@ function DetailsModal({ onClose }) {
       total: addon.price * addonQuantities[addon.id],
     }))
 
-  // meals work a little differently: it's not "quantity per item",
-  // it's "checked or not", multiplied by numberOfPeople
   const mealRows = meals
     .filter((meal) => mealsState.selected[meal.id])
     .map((meal) => ({
@@ -48,26 +42,40 @@ function DetailsModal({ onClose }) {
   return (
     <div className="modal-backdrop" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
-        <button onClick={onClose}>×</button>
-        <h2>${grandTotal.toLocaleString()}</h2>
+        <div className="modal-header">
+          <div>
+            <span className="modal-header__title">TOTAL COST FOR THE EVENT</span>
+            <div className="modal-header__total">${grandTotal.toLocaleString()}</div>
+          </div>
+          <button className="close-btn" onClick={onClose} aria-label="Close modal">×</button>
+        </div>
 
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th><th>Unit Cost</th><th>Quantity</th><th>Total Cost</th>
-            </tr>
-          </thead>
-          <tbody>
-            {allRows.map((row) => (
-              <tr key={row.name}>
-                <td>{row.name}</td>
-                <td>${row.unitCost}</td>
-                <td>{row.quantityLabel}</td>
-                <td>${row.total.toLocaleString()}</td>
+        {allRows.length === 0 ? (
+          <p style={{ color: '#64748b', textAlign: 'center', padding: '2rem 0' }}>
+            No items selected yet.
+          </p>
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Unit Cost</th>
+                <th>Quantity</th>
+                <th>Total Cost</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {allRows.map((row) => (
+                <tr key={row.name}>
+                  <td>{row.name}</td>
+                  <td>${row.unitCost.toLocaleString()}</td>
+                  <td>{row.quantityLabel}</td>
+                  <td>${row.total.toLocaleString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   )
