@@ -49,3 +49,48 @@
 .get-started-button:hover {
   background-color: #c73468;
 }
+
+.events_categories {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  background-color: #f7c6d9;
+  background-image: repeating-linear-gradient(
+    135deg,
+    #f9d7e4 0px, #f9d7e4 20px,
+    #f7c6d9 20px, #f7c6d9 40px
+  );
+  padding: 40px 24px;
+}
+
+.events_categories ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  min-width: 220px;
+  flex: 1 1 220px;
+  max-width: 280px;
+  background: #ffffffcc;
+  border-radius: 6px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.events_categories h2 {
+  background-color: #d94a7c;
+  color: #fff;
+  margin: 0;
+  padding: 12px 10px;
+  font-size: 18px;
+}
+
+.events_categories li {
+  padding: 8px 12px;
+  color: #4a3a40;
+  border-bottom: 1px solid #eed3dc;
+}
+
+.events_categories li:last-child {
+  border-bottom: none;
+}
