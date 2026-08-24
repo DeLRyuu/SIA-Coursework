@@ -1,3 +1,4 @@
+import './EventPlanner.css';
 function EventPlanner() {
   return (
     <div className="event-planner-container">
@@ -8,7 +9,13 @@ function EventPlanner() {
 
       {/* Section for describing the purpose or overview of the app */}
       <section className="description">
-        {/* Description content goes here */}
+        {/* Brief introduction or marketing message */}
+        <p>
+            Plan and organize your events effortlessly with Event Planner. From
+            birthdays to corporate meetings, we've got you covered.
+        </p>
+        {/* Primary call-to-action button */}
+        <button className="get-started-button">Get Started</button>
       </section>
 
       {/* Section to list or categorize different types of events */}
