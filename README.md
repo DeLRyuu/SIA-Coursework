@@ -74,3 +74,23 @@ A React application for browsing a tasty burger menu with a styled navigation ba
 - JavaScript / JSX
 - HTML
 - CSS
+
+### Project 1 - Conference Expense Planner
+
+A React application for planning conference expenses by selecting rooms, meals, and add-ons.
+
+**Features:**
+- Conference planning landing page
+- Room selection
+- Meal selection
+- Add-on selection
+- Expense counter and details modal
+- Redux state management
+
+**Technologies:**
+- React
+- JavaScript / JSX
+- Redux Toolkit
+- React Router
+- HTML
+- CSS
