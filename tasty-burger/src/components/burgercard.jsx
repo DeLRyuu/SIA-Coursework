@@ -3,16 +3,13 @@ import { Heart, Star } from "lucide-react";
 
 function Stars({ rating }) {
   return (
-    <div className="flex items-center gap-0.5">
+    <div className="stars">
       {[1, 2, 3, 4, 5].map((i) => (
         <Star
           key={i}
           size={14}
-          className={
-            i <= Math.round(rating)
-              ? "fill-amber-400 text-amber-400"
-              : "fill-gray-200 text-gray-200"
-          }
+          className={i <= Math.round(rating) ? "star filled" : "star"}
+          fill={i <= Math.round(rating) ? "#fbbf24" : "none"}
         />
       ))}
     </div>
@@ -21,20 +18,18 @@ function Stars({ rating }) {
 
 export default function BurgerCard({ name, desc, price, rating, img }) {
   return (
-    <div className="border border-gray-100 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
-      <div className="h-44 w-full overflow-hidden">
-        <img src={img} alt={name} className="w-full h-full object-cover" />
+    <div className="burger-card">
+      <div className="burger-card-image">
+        <img src={img} alt={name} />
       </div>
-      <div className="p-4">
-        <div className="flex items-center justify-between mb-2">
+      <div className="burger-card-body">
+        <div className="burger-card-top">
           <Stars rating={rating} />
-          <Heart size={18} className="text-gray-400" />
+          <Heart size={18} color="#9ca3af" />
         </div>
-        <h3 className="font-bold text-gray-900 mb-1">{name}</h3>
-        <p className="text-xs text-slate-500 mb-3 leading-relaxed">{desc}</p>
-        <span className="inline-block bg-amber-800 text-white text-xs font-semibold px-3 py-1.5 rounded">
-          {price}
-        </span>
+        <h3 className="burger-card-name">{name}</h3>
+        <p className="burger-card-desc">{desc}</p>
+        <span className="burger-card-price">{price}</span>
       </div>
     </div>
   );
