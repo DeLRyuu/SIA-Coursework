@@ -18,17 +18,15 @@ a {
 
 .app {
   min-height: 100vh;
+  width: 100%;
   background: #ffffff;
-  max-width: 1440px;
-  margin: 0 auto;
 }
 
 /* ---------- Navbar ---------- */
 .navbar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 20px 64px;
+  padding: 24px 40px;
   border-bottom: 1px solid #f3f4f6;
 }
 
@@ -52,9 +50,11 @@ a {
   align-items: center;
   gap: 40px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.03em;
   color: #1f2937;
+  margin-left: auto;
+  margin-right: 40px;
 }
 
 .navbar-links a:hover {
@@ -86,17 +86,17 @@ a {
 /* ---------- Hero ---------- */
 .hero {
   text-align: center;
-  max-width: 640px;
+  max-width: 580px;
   margin: 0 auto;
-  padding: 64px 24px 48px;
+  padding: 48px 24px 40px;
 }
 
 .hero-title {
   color: #dc2626;
   font-weight: 800;
-  font-size: 40px;
+  font-size: 36px;
   letter-spacing: 0.02em;
-  margin: 0 0 20px;
+  margin: 0 0 16px;
 }
 
 .hero-text {
@@ -110,22 +110,22 @@ a {
 .burger-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 24px;
-  padding: 0 64px 64px;
+  gap: 20px;
+  padding: 0 40px 56px;
   width: 100%;
 }
 
 @media (max-width: 1024px) {
   .burger-grid {
     grid-template-columns: repeat(2, 1fr);
-    padding: 0 32px 48px;
+    padding: 0 24px 40px;
   }
 }
 
 @media (max-width: 560px) {
   .burger-grid {
     grid-template-columns: 1fr;
-    padding: 0 20px 40px;
+    padding: 0 20px 32px;
   }
   .navbar {
     padding: 16px 20px;
@@ -148,7 +148,7 @@ a {
 }
 
 .burger-card-image {
-  height: 192px;
+  height: 170px;
   width: 100%;
   overflow: hidden;
 }
