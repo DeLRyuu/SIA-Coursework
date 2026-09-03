@@ -1,7 +1,11 @@
 import React from "react";
 import { ShoppingCart } from "lucide-react";
 
-export default function Navbar({ onOpenPromo }) {
+interface NavbarProps {
+  onOpenPromo: () => void;
+}
+
+export default function Navbar({ onOpenPromo }: NavbarProps): JSX.Element {
   return (
     <header className="navbar">
       <button className="navbar-logo" onClick={onOpenPromo} aria-label="Tasty Burger">
@@ -12,10 +16,10 @@ export default function Navbar({ onOpenPromo }) {
       </button>
 
       <nav className="navbar-links">
-        <a href="#">ABOUT</a>
-        <a href="#">OUR MENU</a>
-        <a href="#">SHOP</a>
-        <a href="#">CONTACT</a>
+        <a className="nav-link" href="#">ABOUT</a>
+        <a className="nav-link" href="#">OUR MENU</a>
+        <a className="nav-link" href="#">SHOP</a>
+        <a className="nav-link" href="#">CONTACT</a>
       </nav>
 
       <div className="navbar-cart">

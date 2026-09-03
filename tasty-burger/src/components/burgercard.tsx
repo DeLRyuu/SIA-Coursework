@@ -6,7 +6,7 @@ interface StarsProps {
   rating: number;
 }
 
-function Stars({ rating }: StarsProps): JSX.Element {
+export function Stars({ rating }: StarsProps): JSX.Element {
   return (
     <div className="stars">
       {[1, 2, 3, 4, 5].map((i) => (
@@ -23,17 +23,11 @@ function Stars({ rating }: StarsProps): JSX.Element {
 
 interface BurgerCardProps extends Burger {
   onQuantityChange?: (id: string, quantity: number) => void;
+  onImageClick?: (burger: Burger) => void;
 }
 
-export default function BurgerCard({
-  id,
-  name,
-  desc,
-  price,
-  rating,
-  img,
-  onQuantityChange,
-}: BurgerCardProps): JSX.Element {
+export default function BurgerCard(props: BurgerCardProps): JSX.Element {
+  const { id, name, desc, price, rating, img, onQuantityChange, onImageClick } = props;
   const [quantity, setQuantity] = useState(0);
   const [favorited, setFavorited] = useState(false);
 
@@ -45,9 +39,14 @@ export default function BurgerCard({
 
   return (
     <div className="burger-card">
-      <div className="burger-card-image">
+      <button
+        type="button"
+        className="burger-card-image"
+        onClick={() => onImageClick?.(props)}
+        aria-label={`View details for ${name}`}
+      >
         <img src={img} alt={name} />
-      </div>
+      </button>
       <div className="burger-card-body">
         <div className="burger-card-top">
           <Stars rating={rating} />

@@ -1,48 +1,26 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import BurgerCard from "./BurgerCard";
+import CategoryFilter, { CategoryOption } from "./CategoryFilter";
+import ProductModal from "./ProductModal";
+import { burgers } from "../data/burgers";
 import { Burger } from "../types";
-
-const burgers: Burger[] = [
-  {
-    id: "crispy-chicken",
-    name: "Crispy Chicken",
-    desc: "Chicken breast, chilli sauce, tomatoes, pickles, coleslaw",
-    price: "৳99.15",
-    rating: 5,
-    img: "https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=400&q=80",
-  },
-  {
-    id: "ultimate-bacon",
-    name: "Ultimate Bacon",
-    desc: "House patty, cheddar cheese, bacon, onion, mustard",
-    price: "৳99.32",
-    rating: 4.5,
-    img: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&q=80",
-  },
-  {
-    id: "black-sheep",
-    name: "Black Sheep",
-    desc: "American cheese, tomato relish, avocado, lettuce, red onion",
-    price: "৳69.15",
-    rating: 4,
-    img: "https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=400&q=80",
-  },
-  {
-    id: "vegan-burger",
-    name: "Vegan Burger",
-    desc: "House patty, cheddar cheese, bacon, onion, mustard",
-    price: "৳99.25",
-    rating: 3.5,
-    img: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&q=80",
-  },
-];
 
 export default function MainScreen(): JSX.Element {
   const [quantities, setQuantities] = useState<Record<string, number>>({});
+  const [selectedCategory, setSelectedCategory] = useState<CategoryOption>("All");
+  const [selectedBurger, setSelectedBurger] = useState<Burger | null>(null);
 
   const handleQuantityChange = (id: string, quantity: number) => {
     setQuantities((prev) => ({ ...prev, [id]: quantity }));
   };
+
+  const filteredBurgers = useMemo(
+    () =>
+      selectedCategory === "All"
+        ? burgers
+        : burgers.filter((burger) => burger.category === selectedCategory),
+    [selectedCategory]
+  );
 
   return (
     <main>
@@ -56,11 +34,26 @@ export default function MainScreen(): JSX.Element {
         </p>
       </section>
 
-      <section className="burger-grid">
-        {burgers.map((b) => (
-          <BurgerCard key={b.id} {...b} onQuantityChange={handleQuantityChange} />
-        ))}
-      </section>
+      <div className="menu-container">
+        <CategoryFilter selected={selectedCategory} onSelect={setSelectedCategory} />
+
+        <section className="burger-grid">
+          {filteredBurgers.map((b) => (
+            <BurgerCard
+              key={b.id}
+              {...b}
+              onQuantityChange={handleQuantityChange}
+              onImageClick={setSelectedBurger}
+            />
+          ))}
+        </section>
+
+        {filteredBurgers.length === 0 && (
+          <p className="no-results">No burgers found in this category.</p>
+        )}
+      </div>
+
+      <ProductModal burger={selectedBurger} onClose={() => setSelectedBurger(null)} />
     </main>
   );
 }
