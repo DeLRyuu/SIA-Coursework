@@ -1,5 +1,5 @@
 import React from "react";
-import BurgerCard from "./burgercard";
+import BurgerCard from "./BurgerCard";
 
 const burgers = [
   {
@@ -34,10 +34,12 @@ const burgers = [
 
 export default function MainScreen() {
   return (
-    <main>
-      <section className="hero">
-        <h1 className="hero-title">OUR CRAZY BURGERS</h1>
-        <p className="hero-text">
+    <main className="bg-white font-sans">
+      <section className="text-center max-w-2xl mx-auto pt-14 pb-10 px-6">
+        <h1 className="text-red-600 font-extrabold text-4xl md:text-5xl tracking-wide mb-4">
+          OUR CRAZY BURGERS
+        </h1>
+        <p className="text-gray-500 text-sm leading-relaxed">
           Get ready for a wild ride of flavors! Our crazy burgers are loaded
           with juicy patties, bold toppings, and irresistible sauces, all
           stacked on a perfectly toasted bun. Whether you like it cheesy, or
@@ -45,7 +47,7 @@ export default function MainScreen() {
         </p>
       </section>
 
-      <section className="burger-grid">
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 px-6 md:px-16 pb-16">
         {burgers.map((b) => (
           <BurgerCard key={b.name} {...b} />
         ))}

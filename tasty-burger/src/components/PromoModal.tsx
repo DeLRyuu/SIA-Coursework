@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import promoImg from "../assets/bai-one-tik-one.jpg";
 
-export default function PromoModal({ isOpen, onClose }) {
+interface PromoModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export default function PromoModal({ isOpen, onClose }: PromoModalProps): JSX.Element | null {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
