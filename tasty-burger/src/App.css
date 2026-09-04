@@ -24,6 +24,22 @@ a {
   color: inherit;
 }
 
+/* ---------- Global interactive-element polish ---------- */
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+.navbar-logo:active,
+.modal-close-btn:active,
+.cart-item-remove:active {
+  transform: scale(0.94);
+}
+
 .app {
   min-height: 100vh;
   width: 100%;
@@ -157,13 +173,68 @@ a {
   padding: 32px 40px 56px;
 }
 
+/* ---------- Menu controls (category filter + search) ---------- */
+.menu-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+/* ---------- Search bar ---------- */
+.search-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 260px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  color: #9ca3af;
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 9999px;
+  padding: 8px 14px 8px 36px;
+  font-size: 13px;
+  color: #1f2937;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-input::placeholder {
+  color: #9ca3af;
+}
+
+.search-input:focus {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+@media (max-width: 560px) {
+  .menu-controls {
+    flex-direction: column;
+  }
+  .search-bar {
+    max-width: 100%;
+  }
+}
+
 /* ---------- Category filter ---------- */
 .category-filter {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
-  margin-bottom: 32px;
 }
 
 .category-pill {
@@ -686,6 +757,61 @@ a {
 @media (max-width: 560px) {
   .cart-sidebar {
     max-width: 100%;
+  }
+}
+
+/* ---------- Toast ---------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #111827;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 12px 18px;
+  border-radius: 9999px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  animation: toast-in 0.25s ease;
+}
+
+.toast svg {
+  color: #4ade80;
+  flex-shrink: 0;
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@media (max-width: 560px) {
+  .toast {
+    left: 20px;
+    right: 20px;
+    transform: none;
+    bottom: 20px;
+  }
+  @keyframes toast-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }
 

@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import BurgerCard from "./BurgerCard";
 import CategoryFilter, { CategoryOption } from "./CategoryFilter";
+import SearchBar from "./SearchBar";
 import ProductModal from "./ProductModal";
 import { burgers } from "../data/burgers";
 import { Burger, CartItem } from "../types";
@@ -8,6 +9,8 @@ import { Burger, CartItem } from "../types";
 interface MainScreenProps {
   selectedCategory: CategoryOption;
   onSelectCategory: (category: CategoryOption) => void;
+  searchTerm: string;
+  onSearchChange: (value: string) => void;
   selectedBurger: Burger | null;
   onSelectBurger: (burger: Burger | null) => void;
   cart: CartItem[];
@@ -20,6 +23,8 @@ interface MainScreenProps {
 export default function MainScreen({
   selectedCategory,
   onSelectCategory,
+  searchTerm,
+  onSearchChange,
   selectedBurger,
   onSelectBurger,
   cart,
@@ -28,13 +33,21 @@ export default function MainScreen({
   onToggleFavorite,
   onAddToCart,
 }: MainScreenProps): JSX.Element {
-  const filteredBurgers = useMemo(
-    () =>
+  const filteredBurgers = useMemo(() => {
+    const byCategory =
       selectedCategory === "All"
         ? burgers
-        : burgers.filter((burger) => burger.category === selectedCategory),
-    [selectedCategory]
-  );
+        : burgers.filter((burger) => burger.category === selectedCategory);
+
+    const term = searchTerm.trim().toLowerCase();
+    if (!term) return byCategory;
+
+    return byCategory.filter(
+      (burger) =>
+        burger.name.toLowerCase().includes(term) ||
+        burger.desc.toLowerCase().includes(term)
+    );
+  }, [selectedCategory, searchTerm]);
 
   const quantityFor = (id: string) => cart.find((item) => item.burger.id === id)?.quantity ?? 0;
 
@@ -51,7 +64,10 @@ export default function MainScreen({
       </section>
 
       <div className="menu-container">
-        <CategoryFilter selected={selectedCategory} onSelect={onSelectCategory} />
+        <div className="menu-controls">
+          <CategoryFilter selected={selectedCategory} onSelect={onSelectCategory} />
+          <SearchBar value={searchTerm} onChange={onSearchChange} />
+        </div>
 
         <section className="burger-grid">
           {filteredBurgers.map((b) => (
@@ -68,7 +84,7 @@ export default function MainScreen({
         </section>
 
         {filteredBurgers.length === 0 && (
-          <p className="no-results">No burgers found in this category.</p>
+          <p className="no-results">No burgers found.</p>
         )}
       </div>
 
