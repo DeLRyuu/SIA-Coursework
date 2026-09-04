@@ -80,16 +80,20 @@ A React application for browsing a tasty burger menu with a styled navigation ba
 A React application for planning conference expenses by selecting rooms, meals, and add-ons.
 
 **Features:**
-- Conference planning landing page
-- Room selection
-- Meal selection
-- Add-on selection
-- Expense counter and details modal
-- Redux state management
+- Burger menu grid with category filtering (All / Chicken / Beef / Bacon / Vegan / Specials)
+- Reusable, typed burger card component with hover animations
+- Product details modal with quantity selection
+- Functional Add to Cart with a cart sidebar and running total
+- Favorites (like/heart) toggle per burger
+- Burger search by name and description
+- Toast notifications for cart actions
+- Navigation bar with promotional menu modal
+- Responsive CSS layout
 
 **Technologies:**
 - React
 - JavaScript / JSX
+- TypeScript / TSX
 - Redux Toolkit
 - React Router
 - HTML
