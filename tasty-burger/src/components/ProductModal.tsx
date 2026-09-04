@@ -6,15 +6,18 @@ import { Stars } from "./BurgerCard";
 interface ProductModalProps {
   burger: Burger | null;
   onClose: () => void;
+  onAddToCart: (burger: Burger, quantity: number) => void;
 }
 
-export default function ProductModal({ burger, onClose }: ProductModalProps): JSX.Element | null {
+export default function ProductModal({ burger, onClose, onAddToCart }: ProductModalProps): JSX.Element | null {
   const [quantity, setQuantity] = useState(1);
+  const [justAdded, setJustAdded] = useState(false);
 
   // Reset quantity whenever a new burger is opened, and lock page scroll while open.
   useEffect(() => {
     if (burger) {
       setQuantity(1);
+      setJustAdded(false);
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
@@ -28,6 +31,12 @@ export default function ProductModal({ burger, onClose }: ProductModalProps): JS
 
   const updateQuantity = (next: number) => {
     setQuantity(Math.max(1, next));
+  };
+
+  const handleAddToCart = () => {
+    onAddToCart(burger, quantity);
+    setJustAdded(true);
+    window.setTimeout(() => setJustAdded(false), 1200);
   };
 
   return (
@@ -76,8 +85,12 @@ export default function ProductModal({ burger, onClose }: ProductModalProps): JS
             </div>
           </div>
 
-          <button className="add-to-cart-btn" type="button">
-            Add to Cart
+          <button
+            className={`add-to-cart-btn ${justAdded ? "added" : ""}`}
+            type="button"
+            onClick={handleAddToCart}
+          >
+            {justAdded ? "Added ✓" : "Add to Cart"}
           </button>
         </div>
       </div>

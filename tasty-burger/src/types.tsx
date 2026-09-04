@@ -14,3 +14,13 @@ export interface Burger {
   img: string;
   category: BurgerCategory;
 }
+
+export interface CartItem {
+  burger: Burger;
+  quantity: number;
+}
+
+export interface CartItem {
+  burger: Burger;
+  quantity: number;
+}

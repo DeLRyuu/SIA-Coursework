@@ -3,9 +3,11 @@ import { ShoppingCart } from "lucide-react";
 
 interface NavbarProps {
   onOpenPromo: () => void;
+  onOpenCart: () => void;
+  cartCount: number;
 }
 
-export default function Navbar({ onOpenPromo }: NavbarProps): JSX.Element {
+export default function Navbar({ onOpenPromo, onOpenCart, cartCount }: NavbarProps): JSX.Element {
   return (
     <header className="navbar">
       <button className="navbar-logo" onClick={onOpenPromo} aria-label="Tasty Burger">
@@ -22,10 +24,14 @@ export default function Navbar({ onOpenPromo }: NavbarProps): JSX.Element {
         <a className="nav-link" href="#">CONTACT</a>
       </nav>
 
-      <div className="navbar-cart">
+      <button
+        className="navbar-cart"
+        onClick={onOpenCart}
+        aria-label={`Open cart, ${cartCount} item${cartCount === 1 ? "" : "s"}`}
+      >
         <ShoppingCart size={22} color="#1f2937" />
-        <span className="navbar-cart-badge">2</span>
-      </div>
+        {cartCount > 0 && <span className="navbar-cart-badge">{cartCount}</span>}
+      </button>
     </header>
   );
 }

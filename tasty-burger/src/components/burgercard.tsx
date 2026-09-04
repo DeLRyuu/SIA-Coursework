@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Heart, Star, Minus, Plus } from "lucide-react";
 import { Burger } from "../types";
 
@@ -22,19 +22,30 @@ export function Stars({ rating }: StarsProps): JSX.Element {
 }
 
 interface BurgerCardProps extends Burger {
-  onQuantityChange?: (id: string, quantity: number) => void;
+  quantity: number;
+  favorited: boolean;
+  onQuantityChange: (id: string, quantity: number) => void;
+  onToggleFavorite: (id: string) => void;
   onImageClick?: (burger: Burger) => void;
 }
 
 export default function BurgerCard(props: BurgerCardProps): JSX.Element {
-  const { id, name, desc, price, rating, img, onQuantityChange, onImageClick } = props;
-  const [quantity, setQuantity] = useState(0);
-  const [favorited, setFavorited] = useState(false);
+  const {
+    id,
+    name,
+    desc,
+    price,
+    rating,
+    img,
+    quantity,
+    favorited,
+    onQuantityChange,
+    onToggleFavorite,
+    onImageClick,
+  } = props;
 
   const updateQuantity = (next: number) => {
-    const clamped = Math.max(0, next);
-    setQuantity(clamped);
-    onQuantityChange?.(id, clamped);
+    onQuantityChange(id, Math.max(0, next));
   };
 
   return (
@@ -52,7 +63,7 @@ export default function BurgerCard(props: BurgerCardProps): JSX.Element {
           <Stars rating={rating} />
           <button
             className={`favorite-btn ${favorited ? "favorited" : ""}`}
-            onClick={() => setFavorited((prev) => !prev)}
+            onClick={() => onToggleFavorite(id)}
             aria-label={favorited ? "Remove from favorites" : "Add to favorites"}
           >
             <Heart size={18} fill={favorited ? "#dc2626" : "none"} color={favorited ? "#dc2626" : "#9ca3af"} />

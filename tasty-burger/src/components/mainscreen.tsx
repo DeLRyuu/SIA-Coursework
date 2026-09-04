@@ -1,19 +1,33 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import BurgerCard from "./BurgerCard";
 import CategoryFilter, { CategoryOption } from "./CategoryFilter";
 import ProductModal from "./ProductModal";
 import { burgers } from "../data/burgers";
-import { Burger } from "../types";
+import { Burger, CartItem } from "../types";
 
-export default function MainScreen(): JSX.Element {
-  const [quantities, setQuantities] = useState<Record<string, number>>({});
-  const [selectedCategory, setSelectedCategory] = useState<CategoryOption>("All");
-  const [selectedBurger, setSelectedBurger] = useState<Burger | null>(null);
+interface MainScreenProps {
+  selectedCategory: CategoryOption;
+  onSelectCategory: (category: CategoryOption) => void;
+  selectedBurger: Burger | null;
+  onSelectBurger: (burger: Burger | null) => void;
+  cart: CartItem[];
+  onQuantityChange: (id: string, quantity: number) => void;
+  favorites: Set<string>;
+  onToggleFavorite: (id: string) => void;
+  onAddToCart: (burger: Burger, quantity: number) => void;
+}
 
-  const handleQuantityChange = (id: string, quantity: number) => {
-    setQuantities((prev) => ({ ...prev, [id]: quantity }));
-  };
-
+export default function MainScreen({
+  selectedCategory,
+  onSelectCategory,
+  selectedBurger,
+  onSelectBurger,
+  cart,
+  onQuantityChange,
+  favorites,
+  onToggleFavorite,
+  onAddToCart,
+}: MainScreenProps): JSX.Element {
   const filteredBurgers = useMemo(
     () =>
       selectedCategory === "All"
@@ -21,6 +35,8 @@ export default function MainScreen(): JSX.Element {
         : burgers.filter((burger) => burger.category === selectedCategory),
     [selectedCategory]
   );
+
+  const quantityFor = (id: string) => cart.find((item) => item.burger.id === id)?.quantity ?? 0;
 
   return (
     <main>
@@ -35,15 +51,18 @@ export default function MainScreen(): JSX.Element {
       </section>
 
       <div className="menu-container">
-        <CategoryFilter selected={selectedCategory} onSelect={setSelectedCategory} />
+        <CategoryFilter selected={selectedCategory} onSelect={onSelectCategory} />
 
         <section className="burger-grid">
           {filteredBurgers.map((b) => (
             <BurgerCard
               key={b.id}
               {...b}
-              onQuantityChange={handleQuantityChange}
-              onImageClick={setSelectedBurger}
+              quantity={quantityFor(b.id)}
+              favorited={favorites.has(b.id)}
+              onQuantityChange={onQuantityChange}
+              onToggleFavorite={onToggleFavorite}
+              onImageClick={onSelectBurger}
             />
           ))}
         </section>
@@ -53,7 +72,11 @@ export default function MainScreen(): JSX.Element {
         )}
       </div>
 
-      <ProductModal burger={selectedBurger} onClose={() => setSelectedBurger(null)} />
+      <ProductModal
+        burger={selectedBurger}
+        onClose={() => onSelectBurger(null)}
+        onAddToCart={onAddToCart}
+      />
     </main>
   );
 }
