@@ -1,18 +1,15 @@
 interface Props {
   label: string;
+  name: string;
   selected: boolean;
   onSelect: () => void;
 }
 
-export default function AnswerOption({ label, selected, onSelect }: Props) {
+export default function AnswerOption({ label, name, selected, onSelect }: Props) {
   return (
-    <button
-      type="button"
-      className={selected ? "answer selected" : "answer"}
-      aria-pressed={selected}
-      onClick={onSelect}
-    >
+    <label className={selected ? "answer selected" : "answer"}>
+      <input type="radio" name={name} checked={selected} onChange={onSelect} />
       {label}
-    </button>
+    </label>
   );
 }

@@ -17,7 +17,7 @@ export default function QuestionCard({ question, number, selected, isLast, onSel
       <h3 className="q-text">{question.text}</h3>
       <div className="answers">
         {question.choices.map((choice, i) => (
-          <AnswerOption key={choice} label={choice} selected={selected === i} onSelect={() => onSelect(i)} />
+          <AnswerOption key={choice} label={choice} name={`question-${question.id}`} selected={selected === i} onSelect={() => onSelect(i)} />
         ))}
       </div>
       <button className="btn" disabled={selected === null} onClick={onNext}>

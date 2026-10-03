@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 interface Props {
   current: number;
   total: number;
@@ -8,6 +10,7 @@ export default function QuizHeader({ current, total, score }: Props) {
   return (
     <header className="quiz-header">
       <h2>Frontend Quiz</h2>
+      <Link to="/" className="nav-link">Home</Link>
       <span>Question {current} of {total}</span>
       <span>Score: {score}</span>
     </header>
