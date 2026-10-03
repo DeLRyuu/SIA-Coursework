@@ -11,13 +11,14 @@ export default function ResultCard({ total, correct, onRetake, onHome }: Props) 
 
   return (
     <section className="card">
-      <p className="q-number">Quiz completed</p>
-      <h2>Your score</h2>
+      <p className="q-number">Quiz Completed</p>
+      <h2>Your score:</h2>
       <div className="score">{correct} / {total}</div>
       <ul className="stats">
         <li><span>Total questions</span><strong>{total}</strong></li>
         <li><span>Correct answers</span><strong>{correct}</strong></li>
         <li><span>Incorrect answers</span><strong>{total - correct}</strong></li>
+        <li><span>Final score</span><strong>{correct} / {total}</strong></li>
         <li><span>Percentage</span><strong>{percentage}%</strong></li>
       </ul>
       <p>{message}</p>
