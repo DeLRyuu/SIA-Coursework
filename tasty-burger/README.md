@@ -1,16 +1,51 @@
-# React + Vite
+# Tasty Burger
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A burger ordering app made with React, TypeScript and Vite.
 
-Currently, two official plugins are available:
+## Versions
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **V1 (Lab 04):** layout and design only (navbar, hero section, burger cards).
+- **V2 (Pre Final Activity):** adds the working features listed below.
 
-## React Compiler
+## Features (V2)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Burger menu shown as a grid of cards, each with a rating, description and price
+- Filter burgers by category: All, Chicken, Beef, Bacon, Vegan, Specials
+- Search burgers by name or description
+- Click a burger image to open a product modal with a quantity selector and an Add to Cart button
+- Quantity stepper on each card that adds the burger to the cart
+- Cart sidebar where you can change quantities, remove items and see the total
+- Cart badge in the navbar showing the number of items
+- Favorite button (heart) on each burger
+- Toast message when a burger is added to the cart
+- Promo popup when the logo is clicked
 
-## Expanding the Oxlint configuration
+## Tech Used
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+- React + TypeScript
+- Vite
+- lucide-react (icons)
+- Plain CSS
+
+## Project Structure
+
+```
+src/
+├── components/   Navbar, MainScreen, BurgerCard, CategoryFilter,
+│                 SearchBar, ProductModal, CartSidebar, PromoModal, Toast
+├── data/         burgers.ts
+├── utils/        currency.ts
+├── types.ts
+└── App.tsx
+```
+
+## How to Run
+
+```bash
+npm install
+npm run dev
+```
+
+## Author
+
+[Whindell B. Doroja] - [BSIT - 3D]
