@@ -43,11 +43,5 @@ h1 { font-size: clamp(2.5rem, 9vw, 4rem); margin: 0; line-height: 1.1; }
   .actions .btn { flex: 1; }
 }
 
-.nav-link { color: var(--muted); background: none; border: 0; border-bottom: 1px solid transparent; font: inherit; padding: 0; cursor: pointer; }
-.nav-link:hover { color: var(--text); border-bottom-color: var(--text); }
 .answer { text-align: left; background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: .85rem 1rem; font-size: 1rem; cursor: pointer; transition: border-color .15s, background .15s; }
 
-.overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, .6); display: grid; place-items: center; padding: 1rem; }
-.modal { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 1.5rem; max-width: 420px; width: 100%; }
-.modal h3 { margin: 0 0 .5rem; }
-.modal p { color: var(--muted); line-height: 1.5; margin: 0 0 1.25rem; }
