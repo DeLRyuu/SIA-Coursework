@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import BurgerCard from "./burgerCard";
+import BurgerCard from "./burgercard";
 import { Burger } from "../types";
 
 const burgers: Burger[] = [
