@@ -1,0 +1,232 @@
+/* ---------- Reset / base ---------- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+  background: #ffffff;
+  color: #1f2937;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.app {
+  min-height: 100vh;
+  width: 100%;
+  background: #ffffff;
+}
+
+/* ---------- Navbar ---------- */
+.navbar {
+  display: flex;
+  align-items: center;
+  padding: 24px 40px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.navbar-logo {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo img {
+  height: 36px;
+  width: auto;
+  display: block;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #1f2937;
+  margin-left: auto;
+  margin-right: 40px;
+}
+
+.navbar-links a:hover {
+  color: #dc2626;
+}
+
+.navbar-cart {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-cart-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #dc2626;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 9999px;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  text-align: center;
+  max-width: 580px;
+  margin: 0 auto;
+  padding: 48px 24px 40px;
+}
+
+.hero-title {
+  color: #dc2626;
+  font-weight: 800;
+  font-size: 36px;
+  letter-spacing: 0.02em;
+  margin: 0 0 16px;
+}
+
+.hero-text {
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ---------- Burger grid ---------- */
+.burger-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+  padding: 0 40px 56px;
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .burger-grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 24px 40px;
+  }
+}
+
+@media (max-width: 560px) {
+  .burger-grid {
+    grid-template-columns: 1fr;
+    padding: 0 20px 32px;
+  }
+  .navbar {
+    padding: 16px 20px;
+  }
+  .navbar-links {
+    display: none;
+  }
+}
+
+/* ---------- Burger card ---------- */
+.burger-card {
+  border: 1px solid #f3f4f6;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: box-shadow 0.15s ease;
+}
+
+.burger-card:hover {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.burger-card-image {
+  height: 170px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.burger-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.burger-card-body {
+  padding: 12px 16px 16px;
+}
+
+.burger-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.burger-card-name {
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 4px;
+  font-size: 15px;
+}
+
+.burger-card-desc {
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.6;
+  margin: 0 0 12px;
+}
+
+.burger-card-price {
+  display: inline-block;
+  background: #78350f;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 4px;
+}
+
+/* ---------- Stars ---------- */
+.stars {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.star {
+  color: #d1d5db;
+}
+
+.star.filled {
+  color: #fbbf24;
+}
+
+/* ---------- Promo background overlay ---------- */
+.promo-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.promo-show {
+  opacity: 0.7;
+}
+
+.promo-hide {
+  opacity: 0;
+}
