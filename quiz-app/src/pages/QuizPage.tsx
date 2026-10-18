@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import { questions } from "../data/questions";
-import QuizHeader from "../Components/QuizHeader";
-import ProgressBar from "../Components/ProgressBar";
-import QuestionCard from "../Components/QuestionCard";
+import QuizHeader from "../components/QuizHeader";
+import ProgressBar from "../components/ProgressBar";
+import QuestionCard from "../components/QuestionCard";
 
 export default function QuizPage() {
   const [current, setCurrent] = useState(0);
