@@ -176,7 +176,7 @@ function App() {
                 </svg>
               </span>
               <div className="logo-text">
-                <span className="brand-name">GadgetVault</span>
+                <span className="brand-name">Delli-Gadgets</span>
                 <span className="brand-tagline">Store Management</span>
               </div>
             </Link>
