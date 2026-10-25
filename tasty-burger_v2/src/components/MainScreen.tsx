@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import BurgerCard from "./burgercard";
+import BurgerCard from "./BurgerCard";
 import CategoryFilter, { CategoryOption } from "./CategoryFilter";
 import SearchBar from "./SearchBar";
 import ProductModal from "./ProductModal";
