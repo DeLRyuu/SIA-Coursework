@@ -1,6 +1,14 @@
 @import "tailwindcss";
 
 @theme {
+  --font-display: "Fredoka", ui-rounded, system-ui, sans-serif;
+  --font-hand: "Caveat", "Segoe Print", cursive;
+
+  --color-ink: #1b1f4b;
+  --color-mist: #eef1ff;
+  --color-lemon: #ffd84d;
+  --color-coral: #ff6b5e;
+
   --animate-shake: shake 0.2s linear infinite;
   --animate-land: land 0.6s cubic-bezier(0.2, 1.4, 0.4, 1);
 
@@ -14,5 +22,19 @@
   @keyframes land {
     0% { transform: scale(0.7); opacity: 0.4; }
     100% { transform: scale(1); opacity: 1; }
+  }
+}
+
+@layer base {
+  body {
+    background-image: radial-gradient(rgb(255 255 255 / 0.07) 1.5px, transparent 1.5px);
+    background-size: 22px 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-shake,
+  .animate-land {
+    animation: none !important;
   }
 }
