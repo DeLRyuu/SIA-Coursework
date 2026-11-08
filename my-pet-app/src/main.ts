@@ -62,8 +62,15 @@ async function loadBreeds(): Promise<void> {
   }
 }
 
+function endpoints(breed: string) {
+  return breed
+    ? { single: `${API}/breed/${breed}/images/random` }
+    : { single: `${API}/breeds/image/random` };
+}
+
 async function roll(): Promise<void> {
-  const data = await getJSON<DogImageResponse>(`${API}/breeds/image/random`);
+  const { single } = endpoints(breedSelect.value);
+  const data = await getJSON<DogImageResponse>(single);
 
   empty.classList.add("hidden");
   pet.classList.remove("hidden");
