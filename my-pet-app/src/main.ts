@@ -30,6 +30,7 @@ const rollButton = $<HTMLButtonElement>("roll");
 const reel = $<HTMLDivElement>("reel");
 const empty = $<HTMLDivElement>("empty");
 const pet = $<HTMLImageElement>("pet");
+const caption = $<HTMLParagraphElement>("caption");
 
 async function getJSON<T>(url: string): Promise<T> {
   const res = await fetch(url);
@@ -53,6 +54,13 @@ const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 /** "hound", "afghan" -> "Afghan hound" */
 function breedLabel(breed: string, sub?: string): string {
   return sub ? `${capitalize(sub)} ${breed}` : capitalize(breed);
+}
+
+/** Read the breed out of an image URL like .../breeds/hound-afghan/n02088094_1003.jpg */
+function labelFromImageUrl(url: string): string {
+  const slug = url.split("/breeds/")[1]?.split("/")[0] ?? "";
+  const [breed, sub] = slug.split("-");
+  return breed ? breedLabel(breed, sub) : "";
 }
 
 async function loadBreeds(): Promise<void> {
@@ -112,6 +120,7 @@ let rolling = false;
 async function roll(): Promise<void> {
   if (rolling) return;
   rolling = true;
+  caption.textContent = "";
   setRolling(true);
 
   try {
@@ -148,7 +157,9 @@ async function roll(): Promise<void> {
     void pet.offsetWidth;
     pet.classList.add("animate-land");
 
-    pet.alt = "A random dog";
+    const label = labelFromImageUrl(final.message);
+    pet.alt = label ? `A ${label}` : "A random dog";
+    caption.textContent = label;
   } finally {
     breedSelect.disabled = false;
     rolling = false;
