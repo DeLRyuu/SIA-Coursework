@@ -1,1 +1,10 @@
 @import "tailwindcss";
+
+@theme {
+  --font-display: "Fredoka", ui-rounded, system-ui, sans-serif;
+  --color-ink: #1b1f4b;
+  --color-mist: #eef1ff;
+  --color-lemon: #ffd84d;
+  --color-coral: #ff6b5e;
+  --color-coral-dark: #b3261e;
+}
