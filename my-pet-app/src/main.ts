@@ -143,6 +143,11 @@ async function roll(): Promise<void> {
     showFrame(final.message);
     setRolling(false);
 
+    // Restart the landing pop each time.
+    pet.classList.remove("animate-land");
+    void pet.offsetWidth;
+    pet.classList.add("animate-land");
+
     pet.alt = "A random dog";
   } finally {
     breedSelect.disabled = false;
