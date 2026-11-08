@@ -1,7 +1,11 @@
 import "./style.css";
 
 const API = "https://dog.ceo/api";
-const POOL_SIZE = 12;
+const POOL_SIZE = 24;
+
+// Timing (in milliseconds). Raise these to make the roll even longer.
+const CHARGE_MS = 1500;
+const SPIN_MS = 6000;
 
 interface DogImageResponse {
   message: string;
@@ -33,6 +37,10 @@ const pet = $<HTMLImageElement>("pet");
 const caption = $<HTMLParagraphElement>("caption");
 const errorBox = $<HTMLParagraphElement>("error");
 
+// The frame reshapes itself to each photo, so the whole image always fits.
+pet.style.objectFit = "contain";
+reel.style.transition = "aspect-ratio 0.35s ease";
+
 async function getJSON<T>(url: string): Promise<T> {
   const res = await fetch(url);
   if (!res.ok) throw new Error(`Request failed (${res.status})`);
@@ -41,11 +49,12 @@ async function getJSON<T>(url: string): Promise<T> {
 
 const sleep = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 
-function preload(url: string): Promise<void> {
+/** Preload an image and resolve with its width / height ratio (0 if it failed). */
+function preload(url: string): Promise<number> {
   return new Promise((resolve) => {
     const img = new Image();
-    img.onload = () => resolve();
-    img.onerror = () => resolve();
+    img.onload = () => resolve(img.naturalWidth / img.naturalHeight || 0);
+    img.onerror = () => resolve(0);
     img.src = url;
   });
 }
@@ -110,15 +119,129 @@ function setRolling(on: boolean) {
   rollButton.disabled = on;
   breedSelect.disabled = on;
   rollButton.textContent = on ? "Rolling…" : "Roll again";
-  reel.classList.toggle("animate-shake", on);
-  pet.classList.toggle("blur-[2px]", on);
-  pet.classList.toggle("scale-110", on);
 }
 
 function showFrame(url: string) {
   empty.classList.add("hidden");
   pet.classList.remove("hidden");
   pet.src = url;
+}
+
+const reduceMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/** Make the frame the same shape as the photo (clamped so it never gets silly). */
+function fitFrameTo(ratio: number) {
+  const r = ratio > 0 ? Math.min(Math.max(ratio, 0.6), 2) : 4 / 3;
+  reel.style.aspectRatio = String(r);
+}
+
+/** Gacha "charging" phase: the frame shakes and glows before the spin. */
+async function charge(): Promise<void> {
+  const dur = reduceMotion() ? 300 : CHARGE_MS;
+
+  const shake = reel.animate(
+    [
+      { transform: "translate(0, 0) rotate(0deg)" },
+      { transform: "translate(-3px, 2px) rotate(-0.8deg)" },
+      { transform: "translate(3px, -2px) rotate(0.8deg)" },
+      { transform: "translate(-2px, -2px) rotate(-0.4deg)" },
+      { transform: "translate(0, 0) rotate(0deg)" },
+    ],
+    { duration: 120, iterations: Math.max(1, Math.round(dur / 120)) },
+  );
+
+  reel.animate(
+    [
+      { boxShadow: "0 0 0 0 rgba(255, 216, 77, 0)" },
+      { boxShadow: "0 0 26px 8px rgba(255, 216, 77, 0.9)" },
+    ],
+    { duration: dur, easing: "ease-in", fill: "none" },
+  );
+
+  await shake.finished;
+}
+
+/**
+ * The spin: a fast right-to-left reel that decelerates, slightly overshoots
+ * the final frame, then settles back onto it (like a slot / gacha reveal).
+ * Returns the strip so the caller can remove it after showing the result.
+ */
+async function spinReel(frames: string[], finalUrl: string): Promise<HTMLDivElement> {
+  const urls = [...frames, finalUrl];
+  const n = urls.length;
+
+  const strip = document.createElement("div");
+  Object.assign(strip.style, {
+    position: "absolute",
+    top: "0",
+    bottom: "0",
+    left: "0",
+    display: "flex",
+    width: `${n * 100}%`,
+    willChange: "transform",
+  });
+
+  for (const url of urls) {
+    const cell = document.createElement("div");
+    Object.assign(cell.style, {
+      width: `${100 / n}%`,
+      height: "100%",
+      flexShrink: "0",
+      background: "#eef1ff",
+    });
+
+    const img = document.createElement("img");
+    img.src = url;
+    img.alt = "";
+    Object.assign(img.style, {
+      width: "100%",
+      height: "100%",
+      objectFit: "cover", // frame already matches the final photo's shape
+      display: "block",
+    });
+
+    cell.append(img);
+    strip.append(cell);
+  }
+
+  empty.classList.add("hidden");
+  pet.classList.add("hidden");
+  reel.append(strip);
+
+  const end = -((n - 1) / n) * 100;
+  const overshoot = 14 / n; // ~14% of one frame past the target
+  const short = reduceMotion();
+
+  try {
+    const spin = strip.animate(
+      [
+        {
+          offset: 0,
+          transform: "translateX(0%)",
+          filter: "blur(6px)",
+          easing: "cubic-bezier(0.2, 0.7, 0.1, 1)",
+        },
+        {
+          offset: 0.88,
+          transform: `translateX(${end - overshoot}%)`,
+          filter: "blur(0px)",
+          easing: "ease-in-out",
+        },
+        {
+          offset: 1,
+          transform: `translateX(${end}%)`,
+          filter: "blur(0px)",
+        },
+      ],
+      { duration: short ? 1000 : SPIN_MS, fill: "forwards" },
+    );
+    await spin.finished;
+  } catch (err) {
+    strip.remove();
+    throw err;
+  }
+
+  return strip;
 }
 
 let rolling = false;
@@ -140,29 +263,35 @@ async function roll(): Promise<void> {
 
     const reelFrames = frames.filter((u) => u !== final.message);
 
+    if (reelFrames.length === 0) {
+      console.warn("Reel pool was empty, so no roll animation will play.");
+    }
+
     // Preload so the reel doesn't flicker (but never wait long).
+    let finalRatio = 0;
     await Promise.race([
-      Promise.all([...reelFrames, final.message].map(preload)),
-      sleep(1500),
+      Promise.all([
+        ...reelFrames.map(preload),
+        preload(final.message).then((r) => {
+          finalRatio = r;
+        }),
+      ]),
+      sleep(2500),
     ]);
 
-    // The roll: frames flip fast, then slow down before landing.
+    // Reshape the frame to the final photo so the whole image fits.
+    fitFrameTo(finalRatio);
+
+    // 1) charge up, 2) spin
+    let strip: HTMLDivElement | null = null;
     if (reelFrames.length > 0) {
-      let delay = 60;
-      for (let i = 0; i < 14; i++) {
-        showFrame(reelFrames[i % reelFrames.length]);
-        await sleep(delay);
-        delay *= 1.14;
-      }
+      await charge();
+      strip = await spinReel(reelFrames, final.message);
     }
 
     showFrame(final.message);
+    strip?.remove();
     setRolling(false);
-
-    // Restart the landing pop each time.
-    pet.classList.remove("animate-land");
-    void pet.offsetWidth;
-    pet.classList.add("animate-land");
 
     const label = labelFromImageUrl(final.message);
     pet.alt = label ? `A ${label}` : "A random dog";
@@ -174,7 +303,7 @@ async function roll(): Promise<void> {
       err instanceof Error
         ? `Couldn't fetch a pet: ${err.message}. Check your connection and try again.`
         : "Couldn't fetch a pet. Try again.",
-  );
+    );
   } finally {
     breedSelect.disabled = false;
     rolling = false;
