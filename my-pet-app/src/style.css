@@ -1,10 +1,18 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: "Fredoka", ui-rounded, system-ui, sans-serif;
-  --color-ink: #1b1f4b;
-  --color-mist: #eef1ff;
-  --color-lemon: #ffd84d;
-  --color-coral: #ff6b5e;
-  --color-coral-dark: #b3261e;
+  --animate-shake: shake 0.2s linear infinite;
+  --animate-land: land 0.6s cubic-bezier(0.2, 1.4, 0.4, 1);
+
+  @keyframes shake {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-3px, 2px) rotate(-0.8deg); }
+    50% { transform: translate(3px, -2px) rotate(0.8deg); }
+    75% { transform: translate(-2px, -2px) rotate(-0.4deg); }
+  }
+
+  @keyframes land {
+    0% { transform: scale(0.7); opacity: 0.4; }
+    100% { transform: scale(1); opacity: 1; }
+  }
 }
