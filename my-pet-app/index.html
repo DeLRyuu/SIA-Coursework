@@ -21,6 +21,23 @@
         >
           <option value="">Any breed (surprise me)</option>
         </select>
+                <div
+          id="reel"
+          class="relative mt-5 aspect-[4/3] overflow-hidden rounded-2xl border-4 border-ink bg-white"
+        >
+          <div id="empty" class="absolute inset-0 grid place-items-center p-6 text-center text-xl font-medium text-ink/70">
+            Press Roll to meet a dog.
+          </div>
+          <img id="pet" alt="" class="hidden h-full w-full object-cover" />
+        </div>
+
+        <button
+          id="roll"
+          type="button"
+          class="mt-3 w-full rounded-2xl border-2 border-ink bg-lemon px-6 py-4 text-2xl font-bold shadow-[0_6px_0_0_var(--color-ink)] transition-transform hover:brightness-105 focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-coral active:translate-y-1 active:shadow-[0_2px_0_0_var(--color-ink)] disabled:cursor-wait disabled:opacity-80"
+        >
+          Roll a pet
+        </button>
       </section>
       <header class="text-center">
         <h1 class="text-5xl font-bold tracking-tight text-mist sm:text-6xl">My Pet App</h1>
