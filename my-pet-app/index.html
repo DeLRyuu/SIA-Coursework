@@ -2,12 +2,22 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>my-pet-app</title>
+    <title>My Pet App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
-  <body>
-    <div id="app"></div>
+  <body class="min-h-screen bg-ink font-display text-ink antialiased">
+    <main class="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center px-5 py-10">
+      <header class="text-center">
+        <h1 class="text-5xl font-bold tracking-tight text-mist sm:text-6xl">My Pet App</h1>
+        <p class="mt-2 text-lg font-medium text-lemon">by Whindell B. Doroja</p>
+      </header>
+    </main>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
