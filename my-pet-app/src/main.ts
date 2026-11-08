@@ -21,6 +21,7 @@ function $<T extends HTMLElement>(id: string): T {
 const breedSelect = $<HTMLSelectElement>("breed");
 
 const rollButton = $<HTMLButtonElement>("roll");
+const reel = $<HTMLDivElement>("reel");
 const empty = $<HTMLDivElement>("empty");
 const pet = $<HTMLImageElement>("pet");
 
@@ -68,13 +69,37 @@ function endpoints(breed: string) {
     : { single: `${API}/breeds/image/random` };
 }
 
-async function roll(): Promise<void> {
-  const { single } = endpoints(breedSelect.value);
-  const data = await getJSON<DogImageResponse>(single);
+function setRolling(on: boolean) {
+  rollButton.disabled = on;
+  breedSelect.disabled = on;
+  rollButton.textContent = on ? "Rolling…" : "Roll again";
+  reel.classList.toggle("animate-shake", on);
+  pet.classList.toggle("blur-[2px]", on);
+  pet.classList.toggle("scale-110", on);
+}
 
+function showFrame(url: string) {
   empty.classList.add("hidden");
   pet.classList.remove("hidden");
-  pet.src = data.message;
+  pet.src = url;
+}
+
+let rolling = false;
+
+async function roll(): Promise<void> {
+  if (rolling) return;
+  rolling = true;
+  setRolling(true);
+
+  try {
+    const { single } = endpoints(breedSelect.value);
+    const data = await getJSON<DogImageResponse>(single);
+    showFrame(data.message);
+  } finally {
+    setRolling(false);
+    breedSelect.disabled = false;
+    rolling = false;
+  }
 }
 
 rollButton.addEventListener("click", roll);
