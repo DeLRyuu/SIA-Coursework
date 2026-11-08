@@ -31,6 +31,7 @@ const reel = $<HTMLDivElement>("reel");
 const empty = $<HTMLDivElement>("empty");
 const pet = $<HTMLImageElement>("pet");
 const caption = $<HTMLParagraphElement>("caption");
+const errorBox = $<HTMLParagraphElement>("error");
 
 async function getJSON<T>(url: string): Promise<T> {
   const res = await fetch(url);
@@ -100,6 +101,11 @@ function endpoints(breed: string) {
       };
 }
 
+function showError(message: string) {
+  errorBox.textContent = message;
+  errorBox.classList.remove("hidden");
+}
+
 function setRolling(on: boolean) {
   rollButton.disabled = on;
   breedSelect.disabled = on;
@@ -120,6 +126,7 @@ let rolling = false;
 async function roll(): Promise<void> {
   if (rolling) return;
   rolling = true;
+  errorBox.classList.add("hidden");
   caption.textContent = "";
   setRolling(true);
 
@@ -160,6 +167,14 @@ async function roll(): Promise<void> {
     const label = labelFromImageUrl(final.message);
     pet.alt = label ? `A ${label}` : "A random dog";
     caption.textContent = label;
+  } catch (err) {
+    setRolling(false);
+    rollButton.textContent = "Try again";
+    showError(
+      err instanceof Error
+        ? `Couldn't fetch a pet: ${err.message}. Check your connection and try again.`
+        : "Couldn't fetch a pet. Try again.",
+  );
   } finally {
     breedSelect.disabled = false;
     rolling = false;
